@@ -1,0 +1,25 @@
+{
+  "name": "cpr-proxy",
+  "version": "1.0.0",
+  "description": "A Node.js WebSocket proxy for Club Penguin Rewritten.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "benji",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "crypto": "^1.0.1",
+    "msgpackr": "^1.2.1",
+    "open": "^7.4.0",
+    "socket.io": "^3.1.0",
+    "socket.io-client": "^3.1.0",
+    "winston": "^3.3.3",
+    "winston-daily-rotate-file": "^4.5.0"
+  },
+  "engines": {
+    "node": ">=15.7.0"
+  }
+}
