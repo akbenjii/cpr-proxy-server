@@ -1,6 +1,4 @@
 'use strict'
-const fs = require('fs');
-const https = require('https');
 let IPCOn = false;
 
 global.clients = {}
@@ -24,11 +22,7 @@ module.exports = class Connection {
     }
 
     start() {
-		const server = https.createServer({
-		  cert: fs.readFileSync('/root/proxy/cert.pem'),
-		  key: fs.readFileSync('/root/proxy/priv.pem')
-		});
-		this.client = new WebSocket.Server({server});
+	this.client = new WebSocket.Server({port: this.server_port});
         if (selectedType === ProxyType.LOGIN) {
             logger.info(`Listening to login on proxy server 127.0.0.1:${this.server_port}`);
         } else logger.info(`Listening to world ${this.world_name} on proxy server 127.0.0.1:${this.server_port}`);
@@ -43,7 +37,6 @@ module.exports = class Connection {
             logger.debug('Client connected to proxy.');
             await Events.connection.init(this.world_name, this.cpr_server, this.server_port, receivedPackets[client.ipAddr], client);
         });
-		server.listen(this.server_port, '0.0.0.0');
     }
 
     async stop(event) {
