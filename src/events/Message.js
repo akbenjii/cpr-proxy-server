@@ -5,12 +5,14 @@ const CryptoKey = require('../handlers/CryptoKey');
 const Command = require('../handlers/CommandHandler');
 
 // Server -> Proxy -> Client
-exports.incoming = async (data, world_name, received_packet, client) => {
+exports.incoming = async (data, client) => {
     let incoming_packet = client.penguin.CryptoUtils.key ? msgpackr.unpack(await client.penguin.CryptoUtils.decrypt(data)) : msgpackr.unpack(new Uint8Array(data));
     logger.incoming(JSON.stringify(incoming_packet));
 
-    if (!client.penguin.CryptoUtils.key) await CryptoKey.init(data, world_name, received_packet, client);
-    else if(selectedType === ProxyType.LOGIN && incoming_packet.action === ActionType.LOGIN.USER) {
+    if (!client.penguin.CryptoUtils.key && selectedType === ProxyType.LOGIN) 
+		await CryptoKey.init(data, null, null, client);
+
+    if(selectedType === ProxyType.LOGIN && incoming_packet.action === ActionType.LOGIN.USER) {
         let servers = incoming_packet.params[4];
 
         incoming_packet.params[incoming_packet.params.length - 2] = CHAT_REGEX;
@@ -23,8 +25,12 @@ exports.incoming = async (data, world_name, received_packet, client) => {
 }
 
 // Client -> Proxy -> Server
-exports.outgoing = async (data, server, client) => {
+exports.outgoing = async (data, world_name, server, client) => {
 	if(server.readyState !== 1) await waitFor(_ => server.readyState === 1);
+	
+    if (!client.penguin.CryptoUtils.key && selectedType === ProxyType.WORLD) 
+		await CryptoKey.init(data, world_name, receivedPackets[client.ipAddr], client);
+	
     let outgoing_packet = client.penguin.CryptoUtils.key ? msgpackr.unpack(await client.penguin.CryptoUtils.decrypt(data)) : msgpackr.unpack(new Uint8Array(data));
     let commandHasRun = Command.trigger(outgoing_packet, client);
 

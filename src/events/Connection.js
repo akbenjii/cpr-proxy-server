@@ -19,11 +19,11 @@ exports.init = async (world_name, cpr_server, server_port, received_packet, clie
         logger.info(`Proxy has connected to World "${world_name}" server.`)
     });
 
-    server.on('message', (data) => Events.message.incoming(data, world_name, received_packet, client));
+    server.on('message', (data) => Events.message.incoming(data, client));
     server.on('error', (err) => Events.close.init(ConnectionType.SERVER, err, server, client));
     server.on('close', (reason) => Events.close.init(ConnectionType.SERVER, reason, server));
 
-    client.on('message', (data) => Events.message.outgoing(data, server, client));
+    client.on('message', (data) => Events.message.outgoing(data, world_name,server, client));
     client.on('error', (err) => Events.close.init(ConnectionType.CLIENT, err, server, client));
     client.on('close', (reason) => Events.close.init(ConnectionType.CLIENT, reason, client));
 }

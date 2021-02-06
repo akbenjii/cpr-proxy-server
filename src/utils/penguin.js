@@ -12,7 +12,7 @@ module.exports = class PenguinClient {
     async emitToServer(action, params) {
         let packet = {action, params};
         logger.outgoing(JSON.stringify(packet));
-        packet = await this.cryptoUtils.encrypt(packet);
+        packet = await this.CryptoUtils.encrypt(packet);
         this.server.send(packet);
     }
 
