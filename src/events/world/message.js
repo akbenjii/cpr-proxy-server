@@ -33,6 +33,5 @@ exports.outgoing = async (penguin, data) => {
     } catch (err) {
         logger.error(`Server : ${err}`);
         if (penguin.client) penguin.client.close();
-        if (penguin.server) penguin.server.close();
     }
 }
