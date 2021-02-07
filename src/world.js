@@ -1,5 +1,7 @@
 'use strict'
 
+const WebSocket = require('ws');
+
 const Penguin = require('./networking/penguin');
 const Servers = require('../config/servers');
 
@@ -12,10 +14,12 @@ module.exports = class World {
             logger.info(`Listening to world ${world_name} on proxy server 127.0.0.1:${world_port}`);
 
             // Start local servers //
-            let penguin = new Penguin(world_port, world_name);
+            this.client = new WebSocket.Server({port: world_port});
 
             // Created whenever a penguin connects. //
-            penguin.client.on('connection', client => {
+            this.client.on('connection', client => {
+                let penguin = new Penguin(world_port, world_name);
+
                 penguin.client = client;
                 penguin.ip_addr = `[${client._socket.remoteAddress}]`;
 

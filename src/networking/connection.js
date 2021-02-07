@@ -7,7 +7,6 @@ module.exports = class Connection {
     constructor(port) {
         this.port = port;
 
-        this.client = new WebSocket.Server({port: port});
         this._redis = redis.createClient({
             host: '127.0.0.1',
             port: 6379
