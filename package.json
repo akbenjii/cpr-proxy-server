@@ -1,0 +1,33 @@
+{
+  "name": "cpr-proxy-server",
+  "version": "1.0.0",
+  "description": "A CPRewritten proxy written using node.js",
+  "main": "index.js",
+  "scripts": {
+    "login": "node index.js login",
+    "world": "node index.js world"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/akbenjii/cpr-proxy-server.git"
+  },
+  "keywords": [
+    "proxy",
+    "cprewritten",
+    "socket.io",
+    "websocket"
+  ],
+  "author": "benji",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/akbenjii/cpr-proxy-server/issues"
+  },
+  "homepage": "https://github.com/akbenjii/cpr-proxy-server#readme",
+  "dependencies": {
+    "msgpackr": "^1.2.1",
+    "redis": "^3.0.2",
+    "winston": "^3.3.3",
+    "winston-daily-rotate-file": "^4.5.0",
+    "ws": "^7.4.3"
+  }
+}
