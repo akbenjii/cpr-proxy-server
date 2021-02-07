@@ -6,6 +6,7 @@ const cryptoKey = require('../../handlers/cryptokey');
 const {unpack} = require('msgpackr');
 
 exports.incoming = async (penguin, data) => {
+    if(!penguin.client || !penguin.server) return;
     try {
         if (penguin.key_exist === false) { // check if login:u world key exists in redis.
             penguin.client.close();
@@ -22,6 +23,7 @@ exports.incoming = async (penguin, data) => {
 }
 
 exports.outgoing = async (penguin, data) => {
+    if(!penguin.client || !penguin.server) return;
     try {
         if (penguin.server && penguin.server.readyState !== 1) await penguin.waitFor(_ => penguin.server.readyState === 1);
         if (!penguin.cryptoUtils['key']) await cryptoKey.init(penguin);
