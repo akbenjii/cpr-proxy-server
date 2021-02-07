@@ -1,5 +1,6 @@
 'use strict'
 
+const Command = require('../../handlers/command-handler');
 const cryptoKey = require('../../handlers/cryptokey');
 
 const {unpack} = require('msgpackr');
@@ -26,8 +27,10 @@ exports.outgoing = async (penguin, data) => {
         if (!penguin.cryptoUtils['key']) await cryptoKey.init(penguin);
 
         let outgoing_packet = penguin.cryptoUtils.key ? unpack(await penguin.cryptoUtils.decrypt(data)) : unpack(new Uint8Array(data));
-        outgoing_packet = JSON.stringify(outgoing_packet);
+        if(outgoing_packet.action === ActionType.PLAYER.MESSAGE) Command.trigger(penguin, outgoing_packet);
+        if(penguin.ranCommand === true) return penguin.ranCommand = false;
 
+        outgoing_packet = JSON.stringify(outgoing_packet);
         logger.outgoing(outgoing_packet);
         penguin.server.send(data);
     } catch (err) {

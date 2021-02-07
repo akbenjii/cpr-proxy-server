@@ -1,12 +1,14 @@
 'use strict'
 
 const WebSocket = require('ws');
+const CommandLoader = require('./loaders/command-loader');
 
 const Penguin = require('./networking/penguin');
 const Servers = require('../config/servers');
 
 module.exports = class World {
     init() {
+        CommandLoader.load();
         for (let world in Servers) {
             const {english: world_name, port: world_port} = Servers[world];
             logger.info(`Listening to world ${world_name} on proxy server 127.0.0.1:${world_port}`);
