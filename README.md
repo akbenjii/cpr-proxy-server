@@ -1,3 +1,3 @@
 # CPR Proxy Server
 
-A proxy created for CPRewritten's html5 version.
+A proxy created for CPRewritten's HTML5 version.
