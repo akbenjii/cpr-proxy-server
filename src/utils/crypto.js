@@ -1,5 +1,5 @@
-const {subtle, getRandomValues} = require('crypto').webcrypto;
-const msgpackr = require('msgpackr');
+const { subtle, getRandomValues } = require('crypto').webcrypto;
+const { pack } = require('msgpackr');
 
 if (typeof btoa === 'undefined') {
     global.btoa = (str) => {
@@ -48,10 +48,10 @@ module.exports = class CryptoUtils {
             cryptoKey = await subtle.importKey('raw', key, 'AES-GCM', false, ['encrypt', 'decrypt']);
         this.key = cryptoKey;
         return cryptoKey
-    };
+    }
 
     async encrypt(str) {
-        str = msgpackr.pack(str);
+        str = pack(str);
         let iv = getRandomValues(new Uint8Array(12)),
             AESstr = new Uint8Array(await subtle.encrypt({
                 name: 'AES-GCM',
@@ -61,5 +61,5 @@ module.exports = class CryptoUtils {
         encrypted.set(iv)
         encrypted.set(AESstr, iv.length)
         return encrypted;
-    };
+    }
 }
