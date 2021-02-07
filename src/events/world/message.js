@@ -17,7 +17,6 @@ exports.incoming = async (penguin, data) => {
     try {
         if (penguin.key_exist === false) { // check if login:u world key exists in redis.
             penguin.client.close();
-            penguin.server.close();
 
             return logger.error(`login:u does not exists for Penguin${penguin.ip_addr}`);
         }
