@@ -3,6 +3,8 @@
 exports.init = (socket, type, msg) => {
     if (type === ConnectionType.CLIENT && socket.client) {
         socket.client.close();
+        socket._redis.del(`login:u${socket.ip_addr}`);
+
         socket.client = null
 
         logger.info(`Client${socket.ip_addr} has been closed. reason : ${msg}`);
