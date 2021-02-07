@@ -8,9 +8,7 @@ const Servers = require('../config/servers');
 module.exports = class World {
     init() {
         for (let world in Servers) {
-            const {english: world_name, port: world_port, safe_chat} = Servers[world];
-            if (safe_chat) continue;
-
+            const {english: world_name, port: world_port} = Servers[world];
             logger.info(`Listening to world ${world_name} on proxy server 127.0.0.1:${world_port}`);
 
             // Start local servers //

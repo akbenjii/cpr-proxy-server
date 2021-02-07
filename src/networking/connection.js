@@ -3,14 +3,15 @@
 const WebSocket = require('ws');
 const redis = require("redis");
 
+let redis_client = redis.createClient({
+    host: '127.0.0.1',
+    port: 6379
+});
+
 module.exports = class Connection {
     constructor(port) {
         this.port = port;
-
-        this._redis = redis.createClient({
-            host: '127.0.0.1',
-            port: 6379
-        });
+        this._redis = redis_client;
 
         process.on('SIGTERM', async () => await this.stop('SIGTERM'));
         process.on('SIGINT', async () => await this.stop('SIGINT'));
