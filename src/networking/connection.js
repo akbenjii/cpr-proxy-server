@@ -34,8 +34,8 @@ module.exports = class Connection {
         }
         return new Promise(poll);
     }
+}
 
-    stop() {
-        process.exit(0);
-    }
+function stop() {
+    process.exit(0);
 }

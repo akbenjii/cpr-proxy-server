@@ -10,9 +10,7 @@ exports.incoming = async (penguin, data) => {
     try {
         if (penguin.key_exist === false) { // check if login:u world key exists in redis.
             penguin.client.close();
-// {"action":"engine:prompt","params":["logout","Invalid crumbs type.",true]}
-            logger.error(`login:u does not exists for Penguin${penguin.ip_addr}`);
-            return penguin.emitToClient(ActionType.ENGINE.PROMPT, ["logout","urgay",true])
+            return logger.error(`login:u does not exists for Penguin${penguin.ip_addr}`);
         }
         let incoming_packet = penguin.cryptoUtils.key ? unpack(await penguin.cryptoUtils.decrypt(data)) : unpack(new Uint8Array(data));
         incoming_packet = JSON.stringify(incoming_packet);
