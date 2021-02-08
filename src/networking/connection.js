@@ -8,8 +8,8 @@ let redis_client = redis.createClient({
     port: 6379
 });
 
-process.on('SIGTERM', async () => await this.stop('SIGTERM'));
-process.on('SIGINT', async () => await this.stop('SIGINT'));
+process.on('SIGTERM', async () => await stop('SIGTERM'));
+process.on('SIGINT', async () => await stop('SIGINT'));
 
 module.exports = class Connection {
     constructor(port) {
