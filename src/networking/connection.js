@@ -8,13 +8,13 @@ let redis_client = redis.createClient({
     port: 6379
 });
 
+process.on('SIGTERM', async () => await this.stop('SIGTERM'));
+process.on('SIGINT', async () => await this.stop('SIGINT'));
+
 module.exports = class Connection {
     constructor(port) {
         this.port = port;
         this._redis = redis_client;
-
-        process.on('SIGTERM', async () => await this.stop('SIGTERM'));
-        process.on('SIGINT', async () => await this.stop('SIGINT'));
     }
 
     connectToCPR() { // Client to Server

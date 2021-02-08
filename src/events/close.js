@@ -13,9 +13,9 @@ exports.init = (socket, type, msg) => {
         }
     } else if (type === ConnectionType.SERVER && socket.server) {
         socket.server.close();
-        socket.server = null;
         socket._redis.del(`login:u${socket.ip_addr}`);
 
         logger.info(`Server${socket.ip_addr} has been closed. Reason : ${msg}`);
+        socket = null;
     }
 }
